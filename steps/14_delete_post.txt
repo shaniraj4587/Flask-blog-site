@@ -1,0 +1,6 @@
+add delete route in your html file and redirect ot /delete/{{post.sno}}
+
+
+now add a route in your app to delete post from database
+
+query post in database and delete it from database

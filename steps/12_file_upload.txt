@@ -1,0 +1,22 @@
+to upload a file you all need to add a file upload form in your dashbaord
+ <form action="/uploader" method="post" enctype="multipart/form-data">
+                <input type="file" name="file1" id="file">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+
+now create a route for uploader
+add this in top for define
+app.config['UPLOAD_FOLDER'] = params['upload_location']
+
+@app.route("/uploader" , methods=['GET', 'POST'])
+def uploader():
+    if "user" in session and session['user']==params['admin_user']:
+        if request.method=='POST':
+            f = request.files['file1']
+            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+            return "Uploaded successfully!"
+
+to make sure this work properly you need to import to modules
+
+import os
+from werkzeug.utils import secure_filename

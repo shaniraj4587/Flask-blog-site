@@ -1,0 +1,8 @@
+to serve html pages and css files we need to create a static folder and a templates folder
+
+to render html files we need to import render_templates from flask
+
+you can pass variables also in render_template
+    @app.route("/index")
+    def index():
+        return render_template("index.html", name = "shani raj")

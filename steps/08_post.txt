@@ -1,0 +1,23 @@
+create table in your mysql with these field
+sno	title	slug	content	date img_file
+
+
+now define new route in main app
+@app.route("/post/<post_slug>")
+def post_route(post_slug):
+
+    post = Posts.query.filter_by(slug=post_slug).first()
+    return render_template("post.html", params = params, post=post)
+
+now you can access post content and thing from post variable that is passed
+like {{post.title}} and {{post.content}} and {{post.date}}
+
+
+to handle image link we need to create a variable in jinga template
+
+{% set fname = 'assets/img/' + post.img_file %}
+
+now you can set image in url like this
+<header class="masthead" style="background-image: url('{{ url_for('static', filename=fname) }}')">
+
+now all set 

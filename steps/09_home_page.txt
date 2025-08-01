@@ -1,0 +1,5 @@
+use for loop to show posts on home pages in html file 
+and query from database to fetch posts from database
+
+and pass it inside a variable 
+

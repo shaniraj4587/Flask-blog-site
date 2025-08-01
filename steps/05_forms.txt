@@ -1,0 +1,16 @@
+to create a request on browser we need to add method in our route
+
+@app.route("/contact", methods=['GET', 'POST'])
+
+now handle in function using request.method 
+    not forget to import request from flask
+        if(request.method == 'POST'):
+             request.form.get('name')
+    here name is an attribute of input in html form name="name(or email or phone)"
+now use entry to entry in database like this
+
+entry = Contacts(name=name, phone_number=phone, msg=message, email=email)
+        db.session.add(entry)
+        db.session.commit()
+
+we need to add action="route_name" and method="POST" in our html form element(opening tag)

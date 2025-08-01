@@ -1,0 +1,9 @@
+jinja templates used to serves data in html pages
+
+<img src="{{url_for('static', filename='1.png')}}" alt="">
+to serve static files
+
+create a layout.html and add all repeating thing into this 
+and you can inheritence this into all pages in upper side
+
+    {extends "layout.html"}

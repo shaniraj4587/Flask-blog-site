@@ -1,0 +1,31 @@
+A config.json file is created in Flask applications to centralize and manage configuration settings, offering several advantages:
+Separation of Concerns:
+It separates configuration data (like database credentials, API keys, debug settings) from the application's core code. This makes the code cleaner and more organized
+
+secret keys or API credentials, can be stored in config.json or referenced through environment variables within the configuration file, reducing the risk of hardcoding them directly into the source code.
+Easy Management and Updates:
+Centralizing configurations in a file makes it easier to modify or update settings without altering the application's code
+
+
+this we create to store any password and sensitive information
+{
+
+    create in this side
+}
+
+now import json in main app file
+        import json
+now open json file in main  app
+    with open("config.json", "r") as c:
+        params = json.load(c)['params']
+
+now you can asscess all parameters in main app
+
+if (params['local_server'] == 'True'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = params['local_uri']
+else:
+    app.config['SQLALCEMY_DATABASE_URL'] = params['prod_uri']
+
+
+
+It help to create a template of any website

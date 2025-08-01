@@ -1,0 +1,27 @@
+first of all create or copy paste admin login template and create login.html file 
+
+add adminuser and password in config file to use it
+
+add dashboard route in your main python file add get and post method 
+
+take input from form and verify it from username and password from config file 
+if it is true then set a session veriable and redirect to dashboard also check if user is logged in or not
+
+before setting session veriable you need to define a secret key 
+app.secret_key = 'super-secret-key'
+
+this line check is user login or not
+ if "user" in session and session['user']==params['admin_user']:
+        posts = Posts.query.all()
+        return render_template("dashboard.html", params=params, posts = posts)
+    
+if username == params['admin_user'] and password == params['admin_pass']:
+            session['user'] = username
+            posts = Posts.query.all()
+            return render_template("dashbaord.html", params=params, posts = posts)
+
+if user is not logged in then redirect_template to login.html
+
+now simple show all post content in table format add edit and delete button in dashbaord table 
+
+

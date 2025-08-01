@@ -1,0 +1,28 @@
+we can send mail to our email whenever anyone will fill the form
+to do that just install a package called flask-mail
+
+    pip install flask-mail
+
+Now import in your app file
+    from flask_mail import Mail
+now add this code 
+app.config.update(
+    MAIL_SERVER = 'smtp.gmail.com',
+    MAIL_PORT = '465',
+    MAIL_USE_SSL = True,
+    MAIL_USERNAME = params['gmail-user'],
+    MAIL_PASSWORD = params['gmail-password']
+)
+mail = Mail(app)
+
+
+you need to add params of user and password in your config file
+
+when and what are you sending set like this using this function
+
+mail.send_message('New message from ' + name,
+                          sender= params['gmail-user'],
+                          recipients = [params['gmail-user'], email],           # this will message on both
+                                                  
+                          body = message + "\n mobile number is:" + phone
+                          )

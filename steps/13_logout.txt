@@ -1,0 +1,6 @@
+to log out button we need a logout button on dashbaord and a logout route
+
+then delete user from session id
+
+    session.pop("user")
+    and return anywhere

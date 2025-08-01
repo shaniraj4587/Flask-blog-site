@@ -1,0 +1,25 @@
+to see older post and newer post than
+
+1. query all post 
+2. define what will be last page (total post / no_of_post per page)
+3. take args from url as page   
+    page = request.args.get('page')
+4. check that page is numeric if not then set page =1
+    convert it into integer
+
+5. slice post from all post according to need like this
+        post = (page-1)*no_of_post : no_of_post*(page-1)+no_of_post
+
+6. now define logic of next and prev
+
+if page == 1:
+    prev = #
+    next = "/?page=" page +1
+elif page == last:
+    prev = "/?page=" page-1
+    next="#"
+else 
+    prev = "/?page=" page-1
+    next = "/?page=" page +1
+
+now pass both variable in redirection and add in template

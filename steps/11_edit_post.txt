@@ -1,0 +1,7 @@
+now add anchor and herf in buttons of edit and delete to route edit and delete the post
+
+now create a edit.html page to edit post content and title
+
+now you can method="post" content and element of post using redirect show contens using get method 
+but when redirect to sno 0 then it should create new post
+
