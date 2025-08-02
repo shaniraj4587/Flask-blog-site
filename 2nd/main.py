@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
@@ -91,6 +91,7 @@ def contact():
                                                   
                           body = message + "\n mobile number is:" + phone
                           )
+        flash("thankyou for filling the form we will get back to you soon", "success") #here second args take as categories
 
     return render_template('contact.html', params=params)
 
@@ -153,7 +154,7 @@ def edit(sno):
                 db.session.commit()
                 return redirect("/edit/"+sno)
         post = Posts.query.filter_by(sno=sno).first()
-        return render_template("edit.html", params = params, post=post)
+        return render_template("edit.html", params = params, post=post, sno=sno)
 
 
 

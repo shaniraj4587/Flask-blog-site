@@ -1,0 +1,7 @@
+to flash a message a message in flask we need to import it from flask
+it will show message just when user fill contact from
+
+you can call it just refering it like
+
+
+
