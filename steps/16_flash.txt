@@ -2,6 +2,22 @@ to flash a message a message in flask we need to import it from flask
 it will show message just when user fill contact from
 
 you can call it just refering it like
+<!-- flash message -->
+{% with messages = get_flashed_messsages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+        
+
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endwith %}
 
 
-
+pass as veriable like  from main file
+flash("thanks for fill the from, "success")
+2nd args define categories for alert colour
