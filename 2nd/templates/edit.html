@@ -13,6 +13,19 @@
         </div>
     </div>
 </header>
+
+<!-- flash message -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{messages}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif %}
+{% endwith %}
+
+
+
 <!-- Main Content-->
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -71,9 +84,30 @@
                 </div>
             </form>
 
-
-
-
         </div>
+        <h3>Uploaded Images</h3>
+
+        {% if files %}
+        <div class="row">
+            {% for file in files %}
+            <div class="col-6 col-md-3 mb-4">
+                {% if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+                <img src="{{ url_for('uploaded_file', filename=file) }}" alt="{{ file }}"
+                    style="cursor: pointer; margin: 5px; width: 200px;" onclick="setFilename('{{ file }}')"
+                    class="img-fluid rounded">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No files uploaded yet.</p>
+        {% endif %}
+
+
+        <script>
+            function setFilename(filename) {
+                document.getElementById("image_file").value = filename;
+            }
+        </script>
     </div>
     {% endblock body %}

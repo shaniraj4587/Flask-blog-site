@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import json
@@ -129,6 +129,7 @@ def delete(sno):
         post = Posts.query.filter_by(sno=sno).first()
         db.session.delete(post)
         db.session.commit()
+        return redirect("/dashboard")
 
 @app.route('/edit/<sno>', methods=['GET', 'POST'])
 def edit(sno):
@@ -142,8 +143,9 @@ def edit(sno):
 
             if sno == "0":
                 post = Posts(title=box_title, slug=slug, content=content, img_file=image_file, date=date)
-                db.session(post)
-                db.commit()
+                db.session.add(post)
+                db.session.commit()
+                flash("Post added !!")
             else:
                 post = Posts.query.filter_by(sno=sno).first()
                 post.title = box_title
@@ -151,11 +153,19 @@ def edit(sno):
                 post.content = content
                 post.img_file = image_file
                 post.date = date
+                flash("Post edited successful! ")
                 db.session.commit()
                 return redirect("/edit/"+sno)
+            
         post = Posts.query.filter_by(sno=sno).first()
-        return render_template("edit.html", params = params, post=post, sno=sno)
 
+        upload_dir = app.config['UPLOAD_FOLDER']
+        try:
+            files = os.listdir(upload_dir)
+            files = [f for f in files if os.path.isfile(os.path.join(upload_dir, f))]
+        except FileNotFoundError:
+            files = []
+        return render_template("edit.html", params = params, post=post, sno=sno, files=files)
 
 
 @app.route("/uploader", methods=['GET', 'POST'])
@@ -163,8 +173,44 @@ def uploader():
     if "user" in session and session['user'] == params["admin_user"]:
         if request.method == "POST":
             f = request.files['file1']
-            f.save(os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-            return "Uploaded successfully!"
+            custom_name = request.form.get('new_filename', '')
 
+            if f and custom_name:
+                # Get and secure the extension and filename
+                original_filename = secure_filename(f.filename)
+                file_ext = os.path.splitext(original_filename)[1]
+                safe_custom_name = secure_filename(custom_name)
+
+                # Combine custom name with original extension
+                new_filename = safe_custom_name + file_ext
+
+                # Save the file
+                save_path = os.path.join(app.config['UPLOAD_FOLDER'], new_filename)
+                f.save(save_path)
+                flash(f"File uploaded successfully as {new_filename}")
+                return  redirect("/dashboard")
+            else:
+                return "Missing file or filename input."
+
+    return "Unauthorized", 403
+
+@app.route("/uploads")
+def list_uploads():
+    if "user" in session and session['user'] == params["admin_user"]:
+        upload_dir = app.config['UPLOAD_FOLDER']
+        try:
+            files = os.listdir(upload_dir)
+            files = [f for f in files if os.path.isfile(os.path.join(upload_dir, f))]
+        except FileNotFoundError:
+            files = []
+
+        return render_template("uploads.html", files=files)
+
+    return "Unauthorized", 403
+
+
+@app.route('/uploads/<filename>')
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 app.run(debug=True)

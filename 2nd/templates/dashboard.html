@@ -22,10 +22,27 @@
             <a href="/logout"><button class="btn btn-primary">Log out</button></a>
             <hr>
             <h2>Upload your file</h2>
+            <!-- flash message -->
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{messages}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endwith %}
             <form action="/uploader" method="post" enctype="multipart/form-data">
-                <input type="file" name="file1" id="file">
+                <label for="new_filename">New file name (without extension):</label>
+                <input type="text" name="new_filename" id="new_filename" required>
+
+                <br><br>
+
+                <input type="file" name="file1" id="file" required>
+                <br><br>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
+
 
 
             <hr>
@@ -46,7 +63,8 @@
                         <td>{{post.title}}</td>
                         <td>{{post.date}}</td>
                         <td><a href="/edit/{{post.sno}}"><button class="btn btn-primary btn-sm">Edit</button></a></td>
-                        <td><a href="/delete/{{post.sno}}"><button class="btn btn-danger btn-sm">Delete</button></a></td>
+                        <td><a href="/delete/{{post.sno}}"><button class="btn btn-danger btn-sm">Delete</button></a>
+                        </td>
                     </tr>
                     {% endfor %}
 
