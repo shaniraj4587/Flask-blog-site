@@ -85,12 +85,12 @@ def contact():
         entry = Contacts(name=name, phone_number=phone, msg=message, date=datetime.now(), email=email,)
         db.session.add(entry)
         db.session.commit()
-        mail.send_message('New message from ' + name,
-                          sender= params['gmail-user'],
-                          recipients = [params['gmail-user'], email],# this will message on both
+        # mail.send_message('New message from ' + name,
+        #                   sender= params['gmail-user'],
+        #                   recipients = [params['gmail-user'], email],# this will message on both
                                                   
-                          body = message + "\n mobile number is:" + phone
-                          )
+        #                   body = message + "\n mobile number is:" + phone
+        #                   )
         flash("thankyou for filling the form we will get back to you soon", "success") #here second args take as categories
 
     return render_template('contact.html', params=params)
